@@ -1,0 +1,1526 @@
+\enabletrackers[graphics.locating]
+\setupbackend[export=yes,xhtml=yes]
+\setupinteraction[state=start]
+\mainlanguage[pl]
+\language[pl]
+\setupexport
+   [title={Projektowanie książek w Context'cie},
+    author={Piotr Kopszak},
+    firstpage={tytul.jpg},
+   ]
+
+% formatowanie akapitów dotyczących TeX'a.
+
+
+\defineframedtext
+  [debugpar]
+  [frame=off, rightframe=on, leftframe=on, background=screen,
+    margin=no, location=right, align=lohi, width=\textwidth]
+
+
+\defineframedtext
+  [luatexpar]
+  [frame=off, rightframe=on, leftframe=on, background=screen]
+
+
+\defineframedtext
+  [texpar]
+  [frame=off, rightframe=on, leftframe=on, background=screen, style=\ss]
+
+
+
+\usemodule[supp-vis]
+
+%\showmakeup
+
+\starttext
+
+\placecontent
+
+\part[wstep]{Wstęp}
+
+\chapter[Context czy Latex]{\Context\ , \LaTeX {\ }czy …? }
+
+\Context\ nie jest systemem składu dla osób, którym się spieszy bo muszą za
+dwa dni skończyć projekt. Jego zalety odkryją raczej Ci, którym zależy
+na technicznej i artystycznej perfekcji a mniej na dotrzymywaniu
+terminów (choć jego zaawansowani użytkownicy z pewnością będą w stanie
+szybciej poradzić sobie ze skomplikowanymi projektami, niż ich koledzy
+używający popularnego oprogramowania DTP).   Podobnie i ta książka nie jest kolejnym podręcznikiem, który ma ambicje w pięć minut
+przedstawić obszar wiedzy, do którego dobrego przyswojenia nawet kilka
+lat nie byłoby zbyt długim okresem. Jej cel jest inny. Autorowi
+zależało raczej na dogłębnym przedstawieniu fundamentalnych mechanizmów wykorzystywanych przez
+\Context\ w każdej sytuacji, ryzykując że wydadzą się zbyt
+skomplikowane dla początkujących uzytkowników, po to by ułatwić
+zrozumienie działania programu i umożliwić swobodne modyfikowanie
+wyglądu dokumentu, ale przede wszystki by ułatwić użytkownikom zrozumienie
+powodów powstawania większości uciążliwych błędów i uchronić ich przed
+wielogodzinnymi poszukiwaniami rozwiązania problemów, którym można
+zaradzić w dużo krótszym czasie. 
+
+Autor wyszedł z założenia, że sam, nawet bardzo szczegółowy,  opis poleceń \Context'u nie 
+pozwali użytkownikowi wykorzystać w pełni jego możliwości (takie
+podejście zapewne byłoby uzasadnione w przypadku \LaTeX'a, gdzie
+użytkownik nie jest zachęcany do zbyt głębokiego ingerowania w
+działanie systemu ).  Istotą
+\Context'u jest jednak ułatwienie użytkownikowi wykorzystania
+niemal wszystkich procedur \TeX'a, zatem dobre
+wprowadzenie w jego działanie musi przede wszystkim ułatwić użytkownikowi
+twórcze wykorzystanie i rozwijanie dostarczanych przez \Context
+mechanizmów współpracy z \TeX'em.
+
+Pisanie książek o \TeX'u po polsku stało się dużo łatwiejsze po
+opublikowaniu polskiego przekładu {\it The Texbook} Donalda
+E. Knutha, którego dokonali Piotr Bolek, Włodzimierz Bzyl i Adam Dawidziuk. 
+Terminologia dotycząca \TeX'a pochodzi w większości właśnie z tej
+książki. Nie trzeba było jej modyfikować aby opisać działanie
+\Context'u. 
+
+
+Program komputerowy wydaje się rzeczą dość konkretną, zawartą w
+określonej liczbie plików i spełniających określoną liczbę zadań. 
+\Context\ jednak nie jest systemem, którego budowa została już
+zakończona. Wręcz przeciwnie, nie sposób określić momentu w którym
+będzie można go uznać za program, którego rozwój się zakończył. Wiele jego części jest w stadium
+eksperymentalnym. Nie ma też gwarancji, że w przyszłości wszystkie
+jego sekwencje sterujące będą działać tak jak w opisywanej w tej
+książce wersji. Tak więc \Context jest zjawisk dość amorficznym i
+zmiennym na tyle, że nie jest możliwe stworzenie jego definitywnego
+opisu.  Jego rozwój przebiega jednak powoli, a już od dawna
+\Context\ doskonale nadaje się do profesjonalnych zastosowań więc 
+pewna „niestabilność”  jego kodu nie jest przeszkodą w jego używaniu. 
+
+Ponieważ \Context jest pakietem makr \TeX'a,  każdy problem
+można rozwiązać definiując własne procedury używające sekwencji
+sterujących \TeX'a lub \Context'u albo jednego i drugiego
+jednocześnie, zgodnie z osobistymi upodobaniami użytkownika. Głównymi
+kryteriami wyboru przedstawianych rozwiązań będzie zwięzłość i
+stabilność kodu. Czytelnik dzięki temu będzie miał szansę łatwo
+ocenić, co można uzyskać w \Context'cie stosunkowo niewielkim
+wysiłkiem a co wymaga więcej czasu. Inspiracją dla autora było
+podejście autora książki {\it Javascript. Mocne strony}. \Context
+posiada szereg mechanizmów, z których autor w swej kilkunastoletniej pracy
+z systemem nie miał okazji nigdy skorzystać. Priorytetem było
+pokazanie czytelnikowi jak \Context rozwiązuje konkretne problemy
+związane ze składem tekstu, a nie opisanie każdej jego funkcji. 
+
+
+
+
+\Context\ jest systemem dojrzałym, ale nadal rozwijanym co powoduje, że niektóre obszary 
+jego działania nie zostały jeszcze  opracowane w równie wyczerpujący
+sposób jak inne. Użycie
+\Context'u jest jednak możliwe praktycznie w przypadku każdego rodzaju
+dokumentu. Poniższe zestawienie pokazuje jedynie, w jakich sytuacjach
+autor tej książki wybrałby \Context\ a w jakich skorzystałby z
+\LaTeX'a lub Scribusa. 
+
+\startitemize
+\item artykuły matematyczne - \LaTeX lub \ConTeXt
+\item artykuły z zakresu chemii - \Context
+\item inne artykuły naukowe - \Context
+\item materiały edukacyjne - \Context
+\item książki beletrystyczne - \Context
+\item książki naukowe -\Context
+\item ulotki - Scribus
+\item plakaty - Scribus
+\item slajdy do wykładów - \Context
+
+\stopitemize
+ 
+
+
+\chapter[Lista sprawunków]{Lista sprawunków}
+
+Opisane w tej książce środowisko programistyczne nie jest jedynym, w jakim można używać programu \Context, jednak konsekwentnie w przykładach podawanych dalej stosowane będzie tylko ono. Jak w przypadku wielu innych programów typu Open Source możliwości i sposobów korzystania z nich jest bardzo wiele. W przypadku korzystania z innych wersji programu \Context\ {\ } i innych edytorów, należy skorzystać z ich dokumentacji aby dostosować przedstawione poniżej komendy.
+
+\startitemize
+\item \Context\ {\ } standalone
+\item Emacs
+\item AucTeX
+\item etex-show
+\stopitemize
+
+
+\chapter[Tryb przetwarzania]{Sposób użycia}
+
+\section[Tylko raz]{Tylko raz}
+\startitemize
+\item Ustawić wartość zmiennej „TeX-command-list” w Emacsie, tak żeby „Context full” miało wartość „context”.
+\item Ustawić viewer (http://mathieu.3maisons.org/wordpress/how-to-configure-emacs-and-auctex-to-work-with-a-pdf-viewer)
+
+\stopitemize
+
+Zaawansowana konfiguracja: reftex, synctex + evince
+
+
+\section[Za każdym razem]{Za każdym razem}
+
+
+\startitemize
+\item Otwórz nowy plik z rozszerzeniem tex w Emacsie (kodowanie
+  utf-8)\footnote{W obecnych dystrybucjach Emacs domyślnie korzysta z
+    kodowania utf-8 w przypadku polskich tekstów. Jest możliwe
+    używanie innych kodowań zarówno w Emacsie jak i w \Context'cie}.
+\item Włącz \Context\ mode AucTeX-a -- M-x context-mode ENTER.
+\item C-c C-e ENTER (domyślnie Emacs wstawia otoczenie „text”, jeżeli
+  wyświetli inne w linii poleń, należy je zmienić na „text”).
+\item Wpisz treść dokumentu w otoczeniu ``text'' (Każdy wyraz zaczynający się pojedynczym odwrotnym ukośnikiem jest traktowany jako
+ jako komenda sterująca, a każdy nie zaczynający się nim jako część
+ tekstu, który ma być złożony ).
+\item Zapisz  C-x C-s .
+\item Skompiluj C-c C-c ENTER.
+\item Obejrzyj rezultat C-c C-v .
+\stopitemize
+
+W przypadku dokumentu o rozbudowanej strukturze bardzo przydatny jest
+tryb zarysu (outline mode) Emacsa. Umożliwia on ukrycie treści i
+wyświetlanie tylko tytułów poszczególnych części dokumentu lub
+sekwencji sterujących środowisk (np. itemize, lines itp.). 
+
+\startitemize
+\item Włącz tryb outline minor -- M-x outline-minor-mode ENTER.
+\item Polecenia trybu są dostępne w menu Outline.
+\item Ukryj tekst i pozostaw nagłówki -- C-c @ C-t
+\item Pokaż cały tekst -- C-c @ C-a
+\stopitemize
+\section[Minimalny przykład]{Minimalny przykład}
+
+
+\startbuffer[minimalny przykład]
+\starttext
+{\tfc Minimalny przykład}
+\blank
+\input knuth
+\stoptext
+\stopbuffer
+
+
+\typebuffer[minimalny przykład]
+
+\getbuffer[minimalny przykład]
+
+
+\section[Moduły]{Moduły}
+
+Duży obszar działania systemu jest zaimplementowany przy pomocy
+modułów. Oznacza to, że aby użyć takich funkcji należy zadeklarować w
+pliku źródłowym użycie odpowiedniego modułu. 
+
+\section[Ustawienia]{Ustawienia}
+
+
+
+\section[Najważniejsze polecenia]{Najważniejsze polecenia}
+
+\section[Słownik]{Słownik}
+
+\startitemize
+\item \TeX
+\item \Context
+\item mkII
+\item mkIV
+\item luatex
+\item Emacs
+\item AucTeX
+\stopitemize
+
+\part[Rozwinięcie]{Rozwinięcie}
+
+
+
+\chapter[Pudełka]{Pudełka i klej}
+
+
+\section[Pudełka]{Pudełka}
+
+
+Podobnie jak w programach DTP, skład w \TeX-u rozpoczyna się od
+rysowania prostokątów na płaszczyznie kartki papieru, w których ma
+później pojawić się jakaś treść. Różnica polega na tym, że w
+programach DTP te prostokąty są rozmieszczane na płaszczyznie przy
+pomocy myszki przez użytkownika, a w \TeX-u dzieje się to
+automatycznie. Niniejsza książka ma nadzieję wyjaśnić co  słowo „automatycznie”, tym kontekście, oznacza. 
+
+Prostokąty, które TeX układa na kartce nie są na ogół nigdy puste i
+pewnie dlatego twórca TeX-a nazwał je pudełkami. \TeX-a tak naprawdę
+niewiele obchodzi zawartość pudełek (z wyjatkiem sytuacji, kiedy pudełka zawierają  mniejsze pudełka, które też zresztą mogą zawierać pudełka i tak
+niemal w nieskończoność). Ważne są rozmiary pudełka i sugestie jakie
+autor dostarcza programowi dotyczące ich umiejscowienia. Czasami mogą
+to być konkretne współrzędne, wtedy \TeX nie ma nic do roboty. Ale na
+ogół jest to coś co nazywa się ``klejem''. Jednym z największych
+problemów w zrozumieniu działania \TeX-a i \Context-u jest bardzo
+daleko idąca automatyzacja ich działania. Użytkownik programu może złożyć
+książkę, nie mając świadomości, że układał  ``pudełka'' i łączył je
+przy pomocy ``kleju''. Ta automatyzacja jest jedną z największych
+zalet \Context-u, ale jeżeli użytkownik nie zdaje sobie sprawy z tego 
+ co dzieje się automatycznie,
+a co nie, może się zamienić w jedną z największych jego wad. 
+
+
+\startbuffer[pudełko:001]
+  \ruledhbox{a kuku}
+\stopbuffer
+
+Na przykład taka komenda:
+\typebuffer[pudełko:001]
+
+tworzy takie pudełko:
+
+\getbuffer[pudełko:001]
+
+Użytkownik nie podał ani rozmiarów pudełka, ani jego położenia. To
+wszystko \TeX\ wydedukował sam kierując się wewnętrznymi algorytmami. 
+
+Jeżeli napiszemy
+
+\startbuffer[pudełko:002]
+to poinformujemy \Context\ , że pudełko ma mieć długość 5 cm
+
+\ruledhbox to 5cm{a kuku} 
+\stopbuffer
+
+
+
+\typebuffer[pudełko:002]
+
+
+
+\getbuffer[pudełko:002]
+
+ale nadal ma taką samą wysokość jak poprzednie, pojawia się w takiej
+samej odległości od lewego marginesu i, co bardzo ważne, w odpowiednim
+miejscu na stronie, to znaczy po linijce „to poinformujemy \Context\ , że pudełko ma mieć długość 5 cm”, która pojawiła się wcześniej
+w kodzie źródłowym, i w odpowiedniej od niej odległości określanej
+przez parametr określający wielkość interlinii. 
+
+
+Korzystanie wyłącznie z wbudowanych mechanizmów spowoduje, że nasze
+dokumenty będą posiadały doskonale zunifikowany wygląd, co w pewnych sytuacjach
+może być zaletą (na przykład w przypadku artykułów do pism
+naukowych). Do tego rodzaju zastosowań doskonale nadawał się
+wcześniejszy pakiet makr \TeX-a czyli \LaTeX. Dokumenty przygotowane
+do składu w \LaTeX-u mogły zawierać niemal wyłącznie komendy opisujące
+ich strukturę. Wygląd dokumentu był zdefiniowany przez twórców \LaTeX-a i
+jego modyfikacja, choć możliwa, była dość uciążliwym zadaniem. 
+
+\Context\ zmienił tę sytuację dając użytkownikowi możliwość swobodnej
+zmiany wyglądu każdego elementu struktury dokumentu przy użyciu ustandaryzowanego interfejsu. Zatem, aby wykorzystać
+wszelkie możliwości \Context-u niezbędna  jest wiedza o sposobie
+działania \TeX-a i o dostępnych rodzajach pudełek i kleju. 
+
+[drzewo genealogiczne pudełek w \Context'cie ]  
+
+\Context\ w  przeszłości był systemem umożliwiającym
+przetwarzanie dokumentów pisanych do przetwarzania w  \TeX-u czyli tak
+zwanym Plain-ie, stąd
+możliwość korzystania z komend \TeX-a w jednym  dokumencie razem z
+komendami \Context'u. Z
+biegiem czasu sytuacja się skomplikowała i pojawiły się odpowiedniki
+komend \TeX-a, których użycie jest zalecane. 
+
+
+\useURL[pdfboxes][http://www.pragma-ade.com/general/technotes/pdfboxes.pdf]
+\from[pdfboxes]
+
+\section[Klej]{Klej}
+
+
+Najprostszymi i najczęściej stosowanymi komendami zmieniającymi ilość
+kleju pomiędzy pudełkami są 
+
+\starttyping
+  \vfill 
+\stoptyping
+
+ i 
+
+\starttyping
+  \hfill 
+\stoptyping
+
+\type{\hfill} zwiększa ilość kleju, w miejscu w którym jest użyte, co
+powoduje, że pudełko, które za nim stoi jest przesunięte w prawo
+
+ 
+\startbuffer[pudełko:003]
+ \hfill \ruledhbox{a kuku}
+\stopbuffer
+
+\typebuffer[pudełko:003]
+\getbuffer[pudełko:003]
+
+
+\startbuffer[pudełko:004]
+ \hfill \ruledhbox{a kuku} \hfill
+\stopbuffer
+
+Na szczęście w prostej sytuacji użycie \type{\hfill} jest dość intuicyjne
+\typebuffer[pudełko:004]
+
+Umieszczenie \type{\hfill}  po obu stronach pudełka wyśrodkowuje je na
+linii
+
+\getbuffer[pudełko:004]
+
+
+Niestety, użycie \type{\hfill} nie zawsze jest całkiem
+intuicyjne. Jeżeli chcielibyśmy wyśrodkować jedno pudełko zagnieżdżone
+w drugim
+
+\startbuffer[pudełko:005]
+\ruledvbox{ \hfill \ruledhbox{a kuku} \hfill}
+\stopbuffer
+
+\typebuffer[pudełko:005]
+\getbuffer[pudełko:005]
+
+ W tym przypadku zabrakło kleju po prawej stronie i mniejsze pudełko
+ jest tylko trochę odsunięte od prawej ścianki większego. Na szczęście
+ w tym przypadku wystarczy dodać jeszcze raz \type{\hfill} po prawej
+ stronie. 
+
+\startbuffer[pudełko:006]
+\ruledvbox{ \hfill \ruledhbox{a kuku} \hfill\hfill }
+\stopbuffer
+
+\typebuffer[pudełko:006]
+
+\getbuffer[pudełko:006]
+
+
+A co się stanie jeżeli dołożymy jeszcze jedno pudełko?
+
+
+\startbuffer[pudełko:007]
+\ruledvbox{ \hfill \ruledhbox{a kuku} \hfill\hfill \ruledhbox{kukuryku}}
+\stopbuffer
+
+\typebuffer[pudełko:007]
+
+\getbuffer[pudełko:007]
+
+Jak widać odstępy poziome się zmieniają mimo, że nadal generują je  te same komendy. 
+
+Pudełka można układać nie tylko w poziomie, ale i w pionie.
+
+\startbuffer[pudełko:008]
+\ruledvbox{ \hfill \ruledhbox{a kuku} \hfill\hfill
+\ruledhbox{kukuryku} \blank \ruledhbox{kuku}}
+\stopbuffer
+
+\typebuffer[pudełko:008]
+
+\getbuffer[pudełko:008]
+
+Łatwo się pogubić bo oprócz kleju można dodawać też zwykłe rozmiary i
+\type{\blank} jest właśnie odstępem pionowym o stałej wartości. Wydaje
+się, że  można się domyślić co się stanie jeśli dodamy trochę pionowego kleju.  
+
+
+\startbuffer[pudełko:008]
+\ruledvbox{ \hfill \ruledhbox{a kuku} \hfill\hfill
+\ruledhbox{kukuryku} \blank \ruledhbox{kuku} \vfill}
+\stopbuffer
+
+\typebuffer[pudełko:008]
+
+\getbuffer[pudełko:008]
+
+I tu niespodzianka. Zewnętrzne pudełko dopasowuje się do rozmiarów obu
+pudełek i odstępu między nimi i żadna ilość kleju go nie
+rozciągnie. Co innego jeżeli sami zwiększymy jego rozmiar.
+
+\startbuffer[pudełko:008]
+\ruledvbox to 4cm{ \hfill \ruledhbox{a kuku} \hfill\hfill
+\ruledhbox{kukuryku} \blank \ruledhbox{kuku} \vfill}
+\stopbuffer
+
+\typebuffer[pudełko:008]
+
+\getbuffer[pudełko:008]
+
+Teraz pionowy klej na końcu odpycha pudełka w górę. Z wyśrodkowaniem w
+pionie też nie będzie problemu.
+
+
+\startbuffer[pudełko:008]
+\ruledvbox to 4cm{ \vfill \hfill \ruledhbox{a kuku} \hfill\hfill
+\ruledhbox{kukuryku} \blank \ruledhbox{kuku} \vfill}
+\stopbuffer
+
+\typebuffer[pudełko:008]
+\getbuffer[pudełko:008]
+
+
+Jak widać liczba dostępnych kombinacji jest dość spora. To krótkie
+wprowadzenie może dać jedynie przedsmak tego jak może wyglądać twórcze
+wykorzystanie mechanizmów udostępnianych przez \Context. Połączenie
+tego co pewne z tym co przewidywalne, daje czasem 
+nieprzewidywalne efekty. Sam autor \Context'u napisał:
+\quotation{When \TeX builds paragraphs and pages, it takes a lot into account. Even after years of writing macros the
+interference of skips, kerns, penalties, boxes and rules sometimes surprises me. One must always be aware of
+interline skips, top of page skips, good breaks and no breaks, either user supplied or system generated.
+}.
+
+
+\section[Kary i inne]{Kary i inne}
+
+
+\section[Tryb pionowy i poziomy]{Tryb pionowy i poziomy}
+
+Zrozumienie trybów, w jakich może znajdować się program jest dość trudne dla użytkowników programów okienkowych. Jeżeli ktoś używał edytora vi, to nie będzie miał kłopotu ze zrozumieniem tego, że \TeX w trakcie przetwarzania dokumentu również moze znajdować się w różnych trybach.    
+
+
+\chapter[Podstawy systemu]{Podstawy systemu}
+
+
+
+\section[TeX w pigułce]{\TeX w pigułce}
+
+
+
+\TeX w pigułce? Niemożliwe. Ale trudno używać \ConTeXt'u nie wiedząc
+chociaż  z grubsza jak on działa\footnote{Mówienie o \TeX'u jako
+  silniku \Context'u  nie jest  całkiem ścisłe gdyż preferowanym silnikiem
+  \Context'u jest luatex, jednak był on projektowany od początku jako
+  nowa implementacja \TeX'a. W ich liście sekwencji sterujących występują jednak pewne
+  różnice. Tak więc poszukując listy sekwencji
+  sterujących, które można wykorzystywać w makrach używanych w
+  \Context'cie należy korzystać z  dokumentacji luatexa a nie \TeX'a.}. Najkrócej
+rzecz ujmując \TeX, czytając plik źródłowy, odróżnia w przetwarzanym
+tekście sekwencje sterujące od znaków, które są częścią składanego
+tekstu i wykonuje działania będące efektem sekwencji sterujących jakie
+napotkał. Warto podkreślić, że jest to proces liniowy\footnote{Stąd
+  niemożność stworzenia implementacji \TeX'a, która korzystałaby z
+  wielowątkowości
+  (wspominał o tym twórca \TeX'a Donald E. Knuth:   http://www.informit.com/articles/article.aspx?p=1193856, dostęp:
+  4.01.2014). }. Dobrze zdawać sobie sprawę z najważniejszych etapów
+tego procesu.  
+
+Czytane znaki są zamieniane na leksemy (tokens)\footnote{\TeX Przewodnik użytkownika, s. 48.}. 
+
+Rodzaje leksemów.
+
+Listy leksemów.
+
+% Joseph Wright (http://tex.stackexchange.com/a/171801/359):
+
+% \startlines
+% ConTeXt moves several primitives, renaming them systematically using the prefix \normal.... For ConTeXt MkII, all but one of the primitives moved are from TeX90: there is also one from e-TeX and one 'pdfTeX' one that appears only in LuaTeX:
+
+% \end
+% \everyjob
+% \expanded
+% \input
+% \language
+% \mathop
+% \month
+% \outer
+% \over
+% \unexpanded
+% \vcenter
+% All of these are saved as \normal..., e.g. \normalend is the \end primitive.
+
+% ConTeXt MkIV moves all of the above plus a few additional primitives from TeX90/e-TeX:
+
+% \/ (saved as \normalitaliccorrection)
+% \hoffset
+% \left
+% \middle
+% \right
+% \voffset
+% MkIV uses some Lua code to extend/alter the behaviour of these primitives: again the originals are saved as \normal....
+
+% It also moves two LuaTeX primitives:
+
+% \bodydir
+% \pagedir
+% These are 'hidden' as \spac_directions_normal_body_dir and \spac_directions_normal_page_dir: the \normal... commands do exist but are not equivalent to the primitives.
+
+% \stoplines
+
+
+\section[Parametry przetwarzania]{Parametry przetwarzania}
+
+Najczęściej korzysta się z \Context'u w sposób opisany w \in[Za każdym
+  razem]. Jednak skrypt \type{context} wywoływany z linii komend (który
+wywołuje z kolei skrypt \type{mtxrun})  posiada szereg opcji, które
+mogą w okazać się bardzo przydatne w pewnych sytuacjach.   
+
+
+\section[Znajdowanie ścieżki wyszukiwania]{Znajdowanie ścieżki wyszukiwania}
+
+Dostarczany w każdej dystrybucji \TeX'a, a więc także \Context'u
+programa \type{kpsewhich} umożliwia łatwe odnalezienie katalogów, w
+których można przechowywać pliki w formatach używanych przez
+\Context. Aby odnaleźć miejsca w 
+których można przechowywać pliki z
+rozszerzeniem \quote{tex}, należy na linii poleceń wprowadzić komendę:
+
+\starttyping
+  kpsewhich --show-path=tex
+\stoptyping
+ 
+
+
+
+\section[Konwencje Context'u]{Konwencje \Context'u}
+
+
+\section[Własne komendy]{Procedury użytkownika}
+
+\Context\ stosuje wbudowane mechanizmy \TeX'a do definiowania
+poleceń. Zaleca się używanie haseł rozpoczynających się dużą literą
+dla wszystkich procedur definiowanych przez użytkownika. Dzięki
+przyjęciu takiej konwencji, można mieć pewność, że niechcący nie
+przedefiniuje się żadnej sekwencji systemowej\footnote{\TeX Przewodnik użytkownika, s. 231.}. 
+
+\startdebugpar
+ Debugowanie własnych makr jest o tyle skomplikowane, że
+  \TeX\ nie odróżnia ich w żaden sposób od pozostałych makr. Użycie w
+  pliku źródłowym
+  sekwencji \type{\tracingmacros=1} (patrz \in[Plik logu]) spowoduje zapisanie
+  do logu kompletnej listy sekwencji sterujących użytych podczas
+  przetwarzania pliku źródłowego, jej objętość może jednak skutecznie
+  zniechęcić do analizowania logów \TeX'a.\par
+\stopdebugpar
+
+
+\type{\let}
+\type{\futurelet}
+\type{\def}
+
+
+\type{\edef}
+
+\type{\gdef}
+
+\type{\ifdefined}
+
+\section[niektóre komendy niskopoziomowe]{niektóre komendy niskopoziomowe}
+
+\subsection[appendtoks]{appendtoks i prependtoks}
+
+
+
+\subsection[Protect]{protect}
+
+\subsection[Relax]{relax}
+
+
+
+\subsection[unexpanded]{unexpanded}
+
+
+\subsection[forgetall]{forgetall}
+
+
+
+\subsection[processtokens]{processtokens}
+
+
+
+\section[Mechanizmy pomocnicze]{Mechanizmy pomocnicze}
+
+
+\subsection[Getbuffer]{getbuffer}
+
+
+\subsection[Setups]{setups}
+
+
+\section[Interfejs lua]{Interfejs lua}
+
+Dzięki użyciu luatex-a jako silnika systemu \Context\ możliwe jest
+używanie języka lua do przetwarzania i składu tekstu. 
+
+\startbuffer[lua:001]
+
+\starttext
+
+$2 + 5 \neq \ctxlua{context(3+5)}$, but is equal to \ctxlua{context(2+5)}.
+This is \ctxlua{context(string.upper("absolutely"))} true.
+
+
+\stoptext
+\stopbuffer
+
+\typebuffer[lua:001]
+
+\getbuffer[lua:001]
+
+
+Istnieją sposoby umożliwiające zagnieżdżania kodu lua w dokumentach \Context'u.
+
+\startitemize
+\item Polecenie \type{\ctxlua}
+\item Otoczenie \type{luacode}
+\item \type{\ctxluabuffer{}}
+\stopitemize
+
+
+\chapter[O dokumentach i ich strukturze]{O składzie dokumentów i ich strukturze}
+
+\startbuffer[nagłówek:001]
+\section[Tworzenie nagłówka]{Tworzenie nagłówków}
+\stopbuffer
+
+
+\getbuffer[nagłówek:001]
+
+
+Nikt oczywiście nie używa \Context'u do rysowania pudełek
+na kartce. Swoją wartość najwyraźniej ujawnia podczas pracy z dużymi
+dokumentami o złożonej strukturze, wymagającymi wielu odnośników, list
+i indeksów. Jednak każdy z tych elementów jest dla programu tylko
+pudełkiem, które trzeba umieścić na stronie. Zanim omówimy elementy
+typowej struktury dokumentu w \Context'cie, warto
+przyjrzeć się jak  jest tworzony przez \Context\  typowy nagłówek. Powyższy został wygenerowany
+przy pomocy komendy:
+
+\typebuffer[nagłówek:001]
+
+
+Jak widać \Context\ dodał odpowiedni numer sekcji, i czcionką o
+odpowiednim rozmiarze złożył tekst podany jako argument komendy \type{\section}. 
+Najogólniej mówiąc istnieją dwa sposoby modyfikowania wyglądu
+elementów struktury dokumenty. Po pierwsze większość komend \Context'u
+przyjmuje argumenty modyfikujące ich działanie. Po drugie można
+zdefiniować je na nowo samemu (patrz s. \at[Własne komendy]). 
+
+
+\section[Typowy dokument]{Struktura dokumentu}
+
+
+
+\section[Spis treści]{Spis treści}
+
+
+\section[Indeksy]{Indeksy}
+
+
+
+
+
+\chapter[Modyfikowanie układu strony]{Tworzenie stylu dokumentu}
+
+\section[Akapity]{Linie i akapity}
+
+[O łamaniu wierszy przez \Context\ i parametrach jakie mają na to wpływ
+
+\type{\setuptolerance} ustawianie tolerancji w \Context'cie
+
+\starttexpar
+
+Można podawać wartości liczbowe tolerancji tak jak w \TeX'u np.: \type{\tolerance=1000} 
+
+\stoptexpar
+
+
+Odległość między akapitami zmienia się przy pomocy
+\type{\setupwhitespace[20pt]}. 
+
+
+\subsection[Interlinia]{Interlinia}
+ 
+
+Czytelność tekstu wymaga aby odstępy pomiędzy wierszami 
+były większe niż odstępy międzywyrazowe\footnote{Mitchell, Whightman, s. 38}. 
+Interlinia powinna  mieć stałą wartość. Aby osiągnąć to w \ConTeXt'cie należy
+stosować siatkę (grid). Powinna to być na dobrą sprawę opcja domyślna,
+w tej chwili bez  zastosowania składu na siatce możemy otrzymać
+strony, których interlinia zmienia nieznacznie swoją wartość. Takie
+zachowanie programu może być uzasadnione jedynie w niektórych
+sytuacjach. Skład na siatce uzyskuje się przy użyciu opcji grid
+komendy \type{\setuplayout}
+
+
+\starttyping
+\setuplayout[grid=yes]
+\stoptyping
+
+
+Zmianę domyślnej wartości interlinii można uzyskać przy pomocy polecenia
+\type{\setupinterlinespace}. Na przykład aby uzyskać interlinię o
+wysokości 20 punktów należy jej użyć tak:
+
+\starttyping
+\setupinterlinespace[20pt]
+\stoptyping
+
+Do lokalnej zmiany wartości interlinii przeznaczone jest polecenie
+\type{\setuplocalinterlinespace} , które powinno być użyte pomiędzy
+parą \type{\start} i \type{\stop}.
+
+
+\starttyping
+\start 
+\setuplocalinterlinespace[line=4ex] 
+\input ward
+\stop 
+\stoptyping
+
+
+\section[Tolerancja]{Tolerancja}
+
+Tolerancja (tolerance) określa sposób w jaki TeX łamie wiersze i
+akapity. 
+
+\starttyping
+\setuptolerance  
+\stoptyping
+
+Nie należy używać tej komendy do zmieniania pionowej tolerancji 
+przy składzie na siatce.
+
+
+
+\section[Organizacja specyfikacji preferencji]{Organizacja specyfikacji preferencji}
+
+\Context\ nie nakłada na użytkownika szczególnych wymagań dotyczących
+rozmieszczenia poleceń   w strukturze dokumentu, jednak
+warto samemu wprowadzić pewne zasady ich stosowania, gdyż dokumenty w
+których polecenia przeplatają się z tekstem, który ma być składany, dużo trudniej modyfikować.
+
+Dobrą praktyką wydaje się być wydzielenie globalnych preferencji w
+osobnych plikach, dołączanych za pomocą polecenia \type{\input}. 
+
+
+
+\section[Kolumna tekstu]{Kolumna tekstu na stronie}
+
+Moduł \type{layout} pozwala na określenie szerokości kolumny tekstu w
+zależoności od średniej szerokości znaku. Dzięki temu można łatwo
+uzyskać optymalną ilość znaków w wierszu. Przyjmuje się, że aby
+uzyskać największą czytelność powinno być ich 65-75. 
+
+\type{\adaptlayout} nie działa we wszystkich sytuacjach.
+
+
+
+\subsection[Dzielenie wyrazów]{Dzielenie wyrazów}
+
+
+Można wyłączyć dzielenie wyrazów przy użyciu:
+
+\starttyping
+
+
+\hyphenpenalty10000
+
+\stoptyping
+
+co jest przydatne zwłaszcza przy składzie „w chorągiewkę”. 
+
+%% jeszcze o \setupalign[nothyphenated]   i kiedy go używać
+
+
+[definicje]
+
+[setupy]
+
+[diagnostyka]
+
+[odpowiedniki w lua]
+
+
+
+
+\section[Makeups]{Makeups}
+
+Strony posiadające własny układ graficzny nazywają się w \ConTeXt'cie
+„makeups”. Ich zachowanie może czasem sprawiać niespodzianki. 
+
+\starttyping
+  \startmakeup
+    
+  \stopmakeup
+\stoptyping
+
+Taka komenda generuje jednostronny makeup przy dokumentach. Jeżeli
+włączony jest skład dwustronny (Patrz \in[Numeracja stron]) to
+dodawana jest pusta lewa strona.
+
+
+Innym rodzajem strony, który może być używany (ale po co?) jest \type{TeXpage}. Wstawia do dokumentu stronę, zupełnie niezależną od wczystkich wcześniejszych ustawień, także rozmiarów strony i papieru. 
+
+\startbuffer[texpage]
+  \startTEXpage
+    \externalfigure[cow.pdf][height=10cm]
+  \stopTEXpage
+
+\stopbuffer
+\typebuffer[texpage]
+
+\section[Numeracja stron]{Numeracja stron}
+
+Numery stron dodawane są na każdej stronie automatycznie. Rzadko takie
+zachowanie jest pożądane.
+
+
+\type{\setuppagenumbering[state=start]}
+
+\starttyping
+\setuppagenumber[number=17] 
+\resetpagenumber 
+\stoptyping
+
+Dość mało intuicyjnie komenda ta włącza również skład dwustronny:
+
+\type{\setuppagenumbering[state=start, alternative=doublesided]}
+
+
+ Tak można usunąć numery stron ze stron z ilustracjami:
+\starttyping
+\page
+\setuppagenumber[state=stop]
+\externalfigure[jerzysolo.png][width=0.8\makeupwidth] \page  
+\setuppagenumber[number=17] 
+\stoptyping
+
+\section[Odwołania]{Odwołania}
+
+
+\section[Marginesy]{Marginalia, przypisy }
+
+
+\subsection[Przypisy]{Przypisy}
+
+
+Tekst, który powininen znaleźć się w przypisie dodaje się przy pomocy
+komendy \type{\footnote{Zawartość przypisu.}}. Jeżeli chcemy się
+odwołać do przypisu w innym miejscu przy pomocy standardowych komend
+(\in[Odwołania]) należy dodać do przypisu etykietę, która zostanie
+użyta w odwołaniu do niego: \type{\footnote[Ważny przypis]{Zawartość przypisu.}} 
+
+
+Przypisy mogą sprawiać kłopoty przy mniej standardowym składzie. 
+
+
+\starttyping
+„Footnotes are placed in a block and the settings of the block
+  (e.g. the rule at the top) 
+are controlled by \setupnote but the layout of
+ each entry is controlled by \setupnotation.” 
+Wolfgang 
+\stoptyping
+
+
+
+\subsubsection[Odsyłacze]{Odsyłacze}
+
+
+Domyślnie jako odsyłacze przypisów stosowane są cyfry. Jest też dostępnych kilka innych predefiniowanych 
+zestawów odsyłaczy, które wybiera się przy pomocy atrybutu \type{numberconversion}. Może on przyjmować wartości 
+od „set 1” do „set 5”. 
+
+\setupnotation[footnote][numberconversion=set 1]
+
+Łatwo zdefiniować własny zestaw odsyłaczy  przy pomocy polecenia \type{\defineconversion}, można go później użyć przy pomocy \type{\setupnotation} np.:
+
+\startbuffer[defconv]
+
+\defineconversion[gwiazdki][*,**,***,****,*****,******,*******]
+
+\setupnotation
+   [footnote]
+   [numberconversion=gwiazdki] 
+
+\stopbuffer
+
+\typebuffer[defconv]
+
+
+
+\subsubsection[Cytowanie bibliografii]{Cytowanie bibliografii}
+
+\useURL[cytowanie-apa-se]
+[http://tex.stackexchange.com/questions/213372/where-to-find-a-comprehensive-overview-of-the-features-of-the-context-cite-comma]
+
+\from[cytowanie-apa-se]
+
+\section[Kolumny]{Kolumny}
+
+\type{\startcolumns[n=3] \stopcolumns}
+
+
+\chapter[Przetwarzanie tekstu]{Przetwarzanie tekstu}
+
+
+\section[XML]{XML}
+
+
+
+\section[Markup]{Markup}
+
+
+Moduł t-filter pozwola na skład  tekstów wykorzystujących znaczniki Markdown i inne (patrz https://github.com/adityam/filter). Ten moduł wykorzystuje program Pandoc (http://johnmacfarlane.net/pandoc/demos.html).  
+
+
+
+\startbuffer[pandoc:001]
+\usemodule[filter]
+
+\defineexternalfilter
+    [markdown]
+    [filtercommand={pandoc -t context
+     -o \externalfilteroutputfile\space \externalfilterinputfile}]
+
+\starttext
+
+\startmarkdown
+Początek próbki
+===============
+
+To jest *pierwsza* próbka w **Markdown**. A teraz _coś takiego_ .
+  
+\stopmarkdown
+\stopbuffer
+
+\getbuffer[pandoc:001]
+
+\typebuffer[pandoc:001]
+
+
+
+
+
+\chapter[Mikrotypografia]{Mikrotypografia}
+
+\section[Fonty]{Fonty}
+
+
+
+
+
+
+\subsection[Instalacja fontów]{Instalacja fontów}
+
+
+
+Pierwszą rzeczą jaką należy ustalić jest właściwa nazwa fontu. Np. 
+w  programie \type{fontmatrix} nazwa fontu wyświetla się w pozycji \type{info}.  
+Listę wszystkich fontów w systemie wyświetla też polecenie:
+\type{mtxrun --script fonts --list --all --pattern=*}
+
+
+\startbuffer[fonty]
+\usemodule[simplefonts][size=10pt]
+\setmainfont[Jannon Text Regular][italicfont=Jannon Text Italic]
+\stopbuffer
+
+\typebuffer[fonty]
+
+
+\starttyping
+  1. Make sure context has added the fonts to its database, you can check this for
+the minion pro fonts with the following command:
+
+    mtxrun --script fonts --list --all minionpro*
+
+When you don’t see a list with the file for the minion pro font you can try to
+update the database with
+
+    mtxrun --script fonts --refresh
+
+2. Use the correct name in the third argument of \definefontfamily, e.g.
+“Kepler” has to be replaced with “Kepler Std”.
+
+Wolfgang
+
+Subject: Re: [NTG-context] Problem using the new buildin simplefont \definefontfamily with OTF fonts	permalink
+From:	Wolfgang Schuster (schu...@gmail.com)
+Date:	Mar 9, 2014 3:12:03 pm
+List:	nl.ntg.ntg-context
+\stoptyping
+
+
+
+
+
+\subsection[Font features]{Font features}
+
+%\type{http://wiki.contextgarden.net/FAQ#How_can_I_get_the_.E2.80.9Coldstyle_numbers.E2.80.9D_.28text_figures.29_in_a_document.3F}
+
+
+Listę atrybutów fontów OTF (font features) można uzyskać przy pomocy programu otfinfo. W Debianie jest on częścią pakietu \type{lcdf-typetools}. Instaluje się go np. wydając polecenie na linii komend:
+
+\type{apt-get install} 
+
+
+
+\type{otfinfo -f nazwa_pliku_otf}
+
+
+Przed użyciem należy zarejstrować atrybut w \ConTeXt'cie przy pomocy polecenia \type{\definefontfeature}, np.:
+
+\type{\definefontfeature[default][default][onum=yes]}
+
+(to nie chce działać, ciekawe dlaczego)
+
+W ten sposób dodaje się domyślne opcje, które będą obowiązywać w całym dokumencie. Można poszczegolne atrybuty włączać tylko w niektórych 
+miejscach:
+
+\startbuffer[features-limited]
+
+\definefontfeature[oldstyle][onum=yes]
+
+\starttext
+1234567890 {\addff{oldstyle}1234567890}
+\stoptext
+  
+\stopbuffer
+
+
+
+\typebuffer[features-limited]
+
+
+
+
+Lista font features:
+
+%\type{http://www.microsoft.com/typography/otspec/featurelist.htm}
+
+\useURL[featurlist][http://www.microsoft.com/typography/otspec/featurelist.htm]
+\from[featurlist]
+
+%\useURL[OFctxwiki][http://wiki.contextgarden.net/Fonts_in_LuaTeX#Opentype_features]
+\useURL[OFctxwiki][http://wiki.contextgarden.net/Fonts_in_LuaTeX]
+\from[OFctxwiki]
+
+
+\useURL[featuresets][http://wiki.contextgarden.net/Featuresets]
+\from[featuresets]
+
+\subsection[Użycie fontów]{Użycie fontów}
+
+
+\type{\definebodyfontenvironment[default][em=italic]} 
+
+Zmienia domyślny pochylony font na kursywę dla polecenia \type{\em}.
+
+
+\subsection[InneFonty]{Używanie innych formatów fontów}
+
+
+\section[Tekst rozstrzelony]{Tekst rozstrzelony}
+
+Tekst rozstrzelony w anglosaskiej typografii, i nie tylko anglosaskiej, jest traktowany jako błąd. Zupełnie niesłusznie, 
+ale {\it de igustibus non est disputandum}. W polskiej typografii użycie tekstu rozstrzelonego jest 
+jak najbardziej dozwolone i usankcjonowane tradycją, a używany z rozwagą będzie wyglądał lepiej niż wyróżnienie kursywą, lub, uchowaj Boże, 
+tekst wytłuszczony, który rzadko daje się pogodzić z wymogami estetyki. Twórcy \Context'u należą niestety do pierwszego obozu
+i zalecają składania rozstrzelonego tekstu poza makrem \type{\stretched}, które może być używane
+jedynie w tytułach. 
+
+% To jest niepotrzebne
+% Jedynym rozwiązaniem wydaje się być stworzenie własnego fontu, w którym zostanie zmieniony kerning. Jest to oczywiście dość czasochłonne. 
+% Dużo prościej byłoby zwiększyć automatycznie kerning i później ewentualnie skorygować niewłaściwe odstępy. 
+
+Jest to jednak możliwe. 
+
+\startbuffer[rozstrzelony]
+\definecharacterkerning [extremekerning] [factor=.15]
+\def\Sp%
+{\setcharacterkerning[extremekerning]}
+
+W tym zdaniu jeden wyraz jest {\Sp{rozstrzelony}}.
+
+\stopbuffer
+
+\typebuffer[rozstrzelony]
+{\getbuffer[rozstrzelony]}
+ 
+
+
+
+
+\section[Ligatury]{Ligatury}
+
+\Context\ używa domyślnie ligatur, zgodnie z anglosaskimi zasadami
+typograficznymi, niezależnie od tego czy zadeklarowany język dokumentu
+jest językiem angielskim. W przypadku składu tekstów polskich stosowanie
+ligatury zwykle należy wyłączyć, choć były one używane w tekstach
+staropolskich i można sobie wyobrazić sytuacje kiedy ich zastosowanie
+jest uzasadnione. Ale takie sytuacje należą do wyjątków. Niestety, nie ma żadnej prostej opcji konfiguracyjnej,
+która by umożliwiała deaktywację ligatur. 
+
+Rozwiązaniem jest zdefiniowanie zamienników
+dla zestawów liter, które nie powinny być zastępowane ligaturami przy
+użyciu modułu \type{translate}. Zamiana jest aktywowana sekwencją \type{\enableinputtranslation}. 
+Powinna ona pojawić tuż przed tekstem, w którym ma nastąpić zamiana. Należy przy tym uważać aby po jej użyciu nie użyć żadnej 
+sekwencji sterującej, w której mogą wystąpić znaki, które zostaną
+zamienione. Niestety zamienione w poniższy sposób ligatury są
+rozdzielane przez mechanizm dzielenia wyrazów, co może być
+niepożądane. 
+
+
+
+\startbuffer[lig:000]
+\usemodule[translate]
+\translateinput[fi][f|*|i]
+\translateinput[fl][f|*|l]
+\starttext
+
+{\tfc fizyk, fluor
+
+\enableinputtranslation 
+
+fizyk, fluor}
+
+\stoptext
+\stopbuffer
+
+\typebuffer[lig:000]
+
+\getbuffer[lig:000]
+
+\section[Spacje]{Spacje}
+
+\Context posiada komendę \type{\setupspacing}, która umożliwia
+modyfikację  domyślnie generowanych odstępów między wyrazami. Problem
+w tym, że zestaw opcji tej komendy jest dość ubogi. 
+
+Jeżeli chce się zdefiniować własny rozmiar spacji po znakach
+interpunkcyjnych można skorzystać z rozwiązania zaproponowanego przez
+Hansa Hagena:
+
+\startbuffer[spacje:001]
+\def\myfrenchspacing{\setfrenchspacing{2000}}
+\definespacingmethod[myfrenchspacing]{\mynewfrenchspacing}
+\setupspacing[myfrenchspacing]
+\stopbuffer
+
+\typebuffer[spacje:001]  
+
+
+
+\type{\setupalign[spacing]} włącza specjalne zasady tworzenia
+spacji\footnote{„automatic extra spacing around various punctuation
+  characters” Contextref, s. 136.}.
+
+
+Po słowach jednoliterowych, które nie powinny znaleźć się na końcu
+linii należy zastosować  znak „~” zamiast zwykłej spacji. \Context
+użyje w tym miejscu spacji klejącej. Spacje klejące mają stałą
+szerokość. Jeżeli są wyraźnie
+węższe od przeciętnego rozmiaru spacji w złożonym tekście można je
+podwoić „~~” tak aby ich rozmiar był zbliżony. 
+
+
+\section[Kolor]{Kolor}
+
+Zmiana koloru tekstu, tła lub innych elementów polega na włączeniu
+wybranego koloru przy pomocy sekwencji sterującej  \type{\color}:
+
+
+\startbuffer[kol:001]
+
+\color[darkred] 
+
+Inny kolor.
+
+\stopbuffer
+\typebuffer[kol:001]
+\getbuffer[kol:001]
+
+\color[black]
+
+Jak widać można łatwo zmieniać kolory używając ich nazw, pod
+warunkiem, że są one dostępne dla \Context'u.  
+
+\chapter[Ilustracje]{Ilustracje}
+
+
+ 
+\section[Umieszczanie gotowych ilustracji]{Umieszczanie gotowych ilustracji}
+
+Umieszczanie ilustracji w ConTeXt'cie nie jest na pierwszy rzut oka skomplikowane, jego mechanizm posiada jednak wiele ustawień służących dostosowaniu do potrzeb użytkownika, które warto poznać.
+
+
+\type{\externalfigure} to vbox więc jest przetwarzane w trybie pionowym nawet na początku akapitu (i dlatego jest po nim generowana pusta linia)
+
+\type{\externalfigure[logo.pdf]}
+
+
+
+
+\useURL[wdetalach][http://www.pragma-ade.com/general/manuals/details.pdf]
+\from[wdetalach]
+
+\section[Generowanie grafiki]{Generowanie grafiki}
+
+
+\section[il.na spad]{Ilustracje pełnostronicowe na spad}
+
+\startbuffer[naspad]
+
+\useMPlibrary [dum]
+\setuppagenumbering[state=stop]
+\setuppapersize[A5][A4]
+\setupbackgrounds[page][background=mybg,frame=on]
+\setuplayout[marking=on,location=middle]
+\definelayer[mybg]  
+            [x=0mm, y=0mm, width=\makeupwidth, height=\makeupheight] 
+            \starttext
+            \setlayer[mybg]
+                     [hoffset=-4mm, voffset=-3mm] 
+             {  \externalfigure [dummy] [width=15.4cm,height=21.6cm]} 
+             \input tufte
+           \stoptext
+  
+\stopbuffer
+
+Najprostsza sytuacja: umieszczamy ilustrację na warstwie i wprowadzamy rozmiary bezwzględne.
+
+\typebuffer[naspad]
+
+\chapter[Dokumenty elektroniczne]{Dokumenty elektroniczne}
+
+
+\section[Podstawy dokumenty elektroniczne]{Przygotowanie dokumentów elektronicznych}
+
+
+
+Nie trzeba już nikogo przekonywać, że dokumenty przeznaczone do
+wyświetlania  w urządzeniach elektronicznych rządzą się swoimi
+własnymi prawami i, choć \Context\ tworzy wszelkie dokumenty w formacie
+pdf, który jest jednym z formatów używanych do tworzenia dokumentów
+elektronicznych, to powinny być one projektowane od podstaw, a nie
+adaptowane z wersji przeznaczonych do druku.  
+
+
+Pierwszą rzeczą, jaką należy zrobić jest włączenie generowania linków
+w obrębie dokumentu. Dzięki temu nasze dokumenty staną się
+interaktywne
+
+\type{\setupinteraction[state=start]}
+ 
+
+
+
+
+\section[Epub]{Epub}
+
+
+
+\section[t-eink-devices]{t-eink-devices}
+
+
+http://randomdeterminism.wordpress.com/2012/04/09/a-style-file-for-eink-readers/
+
+\chapter[Przekształcenia wydruku]{Przekształcenia wydruku}
+
+
+\section[Impozycja]{Impozycja}
+
+
+
+
+
+\part[Diagnostyka]{Diagnostyka}
+
+
+\chapter[testy]{Testy}
+
+
+\section[Dokumenty testowe]{Dokumenty testowe}
+
+
+\Context\ dostarcza szereg dokumentów testowych, które mogą być używane
+do testowania (patrz \in[Minimalny przykład]). Brak w nich dokumentów w języku polskim, dlatego warto
+stworzyć takie dokumenty samemu i umieścić je w jednym z katalogów,
+znajdujących się w ścieżce wyszukiwania
+(patrz \in[Znajdowanie ścieżki wyszukiwania]). Jeżeli np. mamy taki
+tekst zapisany w pliku \type{próbka.tex} wystarczy utworzyć dokument:
+
+\startbuffer[probka]
+\starttext
+\input próbka  
+\stoptext
+\stopbuffer
+
+\typebuffer[probka]
+
+który będzie zawierał tekst z pliku \type{próbka.tex}.
+
+\chapter[Plik logu]{Plik logu i debugowanie makr}
+
+
+Uruchamianie \Context'u w trybie interaktywnym http://wiki.contextgarden.net/Console_Mode
+
+
+Podstawowym źródłem informacji o tym jak \Context składa tekst
+źródłowy i jakie napotyka błędy jest plik logu. Składa się on z nazwy
+pliku źródłowego z rozszerzeniem \type{log}. 
+
+
+Źródła: trac-ctx.mkiv
+
+
+
+[Omówić \type{\tracingmacros=1}]
+
+
+\starttyping
+    \tracingcommands [pi] if positive, writes commands to the .log file.
+    \tracinglostchars [pi] if positive, writes characters not in the current font to the .log file.
+    \tracingmacros [pi] if positive, writes to the .log file when expanding macros and arguments.
+    \tracingonline [pi] if positive, writes diagnostic output to the terminal as well as to the .log file.
+    \tracingoutput [pi] if positive, writes contents of shipped out boxes to the .log file.
+    \tracingpages [pi] if positive, writes the page-cost calculations to the .log file.
+    \tracingparagraphs [pi] if positive, writes a summary of the line-breaking calculations to the .log file.
+    \tracingrestores [pi] if positive, writes save-stack details to the .log file.
+    \tracingstats [pi] if positive, writes memory usage statistics to the .log file.
+    \tracingall turns on every possible mode of interaction
+
+
+e-TeX introduces a number of new features in the form of:
+
+    \tracingassigns [pi] When the program is compiled with the code for collecting statistics and \tracingassigns has a value of 1 or more, all assignments subject to TEX's grouping mechanism are traced.
+    \tracinggroups [pi] a further aid to debugging runaway-group problems, \tracinggroups (an internal read/write integer) causes e-TeX to trace entry and exit to every group while set to a positive non-zero value.
+    \tracingifs [pi] When \tracingifs has a value of 1 or more, all conditionals (including \unless, \or, \else, and \fi) are traced, together with the starting line and nesting level; the \showifs command displays the state of all currently active conditionals.
+    \tracingscantokens [pi] an internal read/write integer, assigning it a positive non-zero value will cause an open-parenthesis and space to be displayed whenever \scantokens is invoked; the matching close-parenthesis will be recorded when the scan is complete. If a traceback occurs during the expansion of \scantokens, the first displayed line number will reflect the logical line number of the pseudo-file created from the parameter to \scantokens; thus enabling \tracingscantokens can assist in identifying why an seemingly irrational line number is shewn as the source of error (the traceback always continues until the line number of the actual source file is displayed).
+
+
+\show, 
+\showthe, 
+\message, 
+
+\stoptyping
+\chapter[Wizualizacje]{Debugowanie składu}
+
+
+\type{\enabletrackers[graphics.locating]} - logowanie informacji o dołączonych plikach graficznych.
+
+\type{\tracemathtrue} - debugowanie składu wzorów matematycznych
+
+
+\type{ \showgrid  }
+\type{\showframe }
+\type{\showmakeup }
+
+\type{\showlayout[dd] } przyjmuje jako argument jednostkę w jakiej mają być podane wymiary (cm, mm, cm, bp, pt, dd)
+
+\type{ \showallmakeup}
+
+\type{ \showstruts}
+\type{ \showglyphs}
+ 
+
+\type{\showpalet[alfa][vertical,name,number]}%opisane w wiki ale mi nie działa
+\type{\showpardata}% działa
+\type{\showexternalfigurea}% nie
+\type{\showfields}% nie
+\type{\showstruts}
+\type{\showfontstyle}
+\type{\showmargins}
+
+
+
+	
+
+
+By default MetaPost does not display the messages injected with message. However, the messages can be enabled using \type{\enabletrackers}.
+
+To enable verbose debug output use tracingall, which prints plenty of debugging output to the console and the log file. Here's a complete example:
+\starttyping
+\enabletrackers
+  [metapost.showlog]
+
+\starttext
+  \startMPpage
+    tracingall;
+    message "This is a debug message.";
+    fill fullcircle scaled 1in withcolor blue;
+    label.top(btex This is a test. etex, origin);
+  \stopMPpage
+\stoptext
+\stoptyping
+
+
+\chapter[Generowanie list ilustracji]{Generowanie list ilustracji}
+
+
+
+
+
+\chapter[Błędy TeXa]{komunikaty błędów \TeX'a}
+
+
+
+
+\type{TeX capacity exceeded, sorry [ ...}
+
+
+\starttyping
+http://www.togaware.com/linux/survivor/TeX_Capacity.html
+
+If you get an error while running TEX or LATEX like:
+
+
+
+  TeX capacity exceeded, sorry [pool size = 67555]
+
+Then edit /etc/texmf/texmf.cnf to set:
+
+
+
+  pool_size = nnnnnn
+
+\stoptyping
+
+
+
+\part[Przewodnik po Context'cie]{Przewodnik po \Context'cie}
+
+
+\chapter[Instalacja ConTeXt'u]{Instalacja \Context'u}
+
+ 
+\chapter[Moduły]{Moduły}
+
+Generowanie dokumentacji modułu:
+
+pliki tex:
+
+\type{context --ctx=s-mod t-simplefonts.tex}
+
+pliki lua:
+
+\type{context --ctx=x-ldx font-def.lua}
+
+
+
+\chapter[Instalacja i konfiguracja fontów]{Instalacja i konfiguracja
+  fontów}
+
+
+\chapter[Lista sekwencji]{Lista wybranych sekwencji sterujących
+  ConTeXt'u }
+
+Poniższa lista jest niepełnym wyborem. Podawanie pełnej listy wydaje
+się niecelowe, po pierwsze ze względu na ilość zdefiniowanych
+procedur, z których wiele ma bardzo ograniczone zastosowanie i
+nieustanne powstawanie  nowych.  
+
+
+\chapter[emacs-context]{Edycja pliku \Context'u w Emacsie}
+\chapter[emacs-context]{Edycja pliku \Context'u w Scite}
+
+
+\section[Problemy]{Rozwiązania niektórych problemów}
+
+
+\subsection[Pionowe przerwy]{Pionowe przerwy}
+
+Skład na siatce z ustawieniem \type{grid=yes} może spowodować
+powstanie niepożądanych pionowych odstępów. Można je usunąć zmieniając 
+ustawienie na \type{grid=tolerant}.
+
+
+\chapter[indeks]{Indeks}
+
+
+\stoptext
