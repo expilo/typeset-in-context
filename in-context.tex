@@ -4,12 +4,18 @@
 \mainlanguage[pl]
 \language[pl]
 \setupexport
-   [title={Projektowanie książek w Context'cie},
+   [title={Złożone w ConteXt'cie},
     author={Piotr Kopszak},
     firstpage={tytul.jpg},
    ]
 
 % formatowanie akapitów dotyczących TeX'a.
+
+
+\defineframedtext
+  [ctxsourcepar]
+  [frame=off, rightframe=on, leftframe=on, background=screen,
+    margin=no, location=right, align=lohi, width=\textwidth]
 
 
 \defineframedtext
@@ -206,9 +212,6 @@ sekwencji sterujących środowisk (np. itemize, lines itp.).
 Duży obszar działania systemu jest zaimplementowany przy pomocy
 modułów. Oznacza to, że aby użyć takich funkcji należy zadeklarować w
 pliku źródłowym użycie odpowiedniego modułu. 
-
-\section[Ustawienia]{Ustawienia}
-
 
 
 \section[Najważniejsze polecenia]{Najważniejsze polecenia}
@@ -504,42 +507,6 @@ Rodzaje leksemów.
 
 Listy leksemów.
 
-% Joseph Wright (http://tex.stackexchange.com/a/171801/359):
-
-% \startlines
-% ConTeXt moves several primitives, renaming them systematically using the prefix \normal.... For ConTeXt MkII, all but one of the primitives moved are from TeX90: there is also one from e-TeX and one 'pdfTeX' one that appears only in LuaTeX:
-
-% \end
-% \everyjob
-% \expanded
-% \input
-% \language
-% \mathop
-% \month
-% \outer
-% \over
-% \unexpanded
-% \vcenter
-% All of these are saved as \normal..., e.g. \normalend is the \end primitive.
-
-% ConTeXt MkIV moves all of the above plus a few additional primitives from TeX90/e-TeX:
-
-% \/ (saved as \normalitaliccorrection)
-% \hoffset
-% \left
-% \middle
-% \right
-% \voffset
-% MkIV uses some Lua code to extend/alter the behaviour of these primitives: again the originals are saved as \normal....
-
-% It also moves two LuaTeX primitives:
-
-% \bodydir
-% \pagedir
-% These are 'hidden' as \spac_directions_normal_body_dir and \spac_directions_normal_page_dir: the \normal... commands do exist but are not equivalent to the primitives.
-
-% \stoplines
-
 
 \section[Parametry przetwarzania]{Parametry przetwarzania}
 
@@ -567,6 +534,12 @@ rozszerzeniem \quote{tex}, należy na linii poleceń wprowadzić komendę:
 
 \section[Konwencje Context'u]{Konwencje \Context'u}
 
+\subsection[Ustawienia]{Definicje, konfiguracje i parametry}
+
+W \ConTeXt'cie konsekwentnie stosowany jest trójstopniowy schemat określania działania
+używanych poleceń. Składa się on z definicji, konfiguracji i modyfikacji działania polecenia przy 
+pomocy parametrów. Łatwo zapamiętać stosowaną konwencję, definicje rozpoczynają się od przedrostka \type{\define}, konfiguracja 
+działania zdefiniowanego wcześniej polecenia od \type{\setup}, natomiast parametry są wywoływane (zwykle czy zawsze?) przez dodanie do polecenia ich listy w nawiasie kwadratowym po poleceniu. Zwykle  (zawsze?) te same parametry są dostępne na każdym etapie. 
 
 \section[Własne komendy]{Procedury użytkownika}
 
@@ -621,6 +594,7 @@ przedefiniuje się żadnej sekwencji systemowej\footnote{\TeX Przewodnik użytko
 
 
 
+
 \section[Mechanizmy pomocnicze]{Mechanizmy pomocnicze}
 
 
@@ -629,6 +603,32 @@ przedefiniuje się żadnej sekwencji systemowej\footnote{\TeX Przewodnik użytko
 
 \subsection[Setups]{setups}
 
+
+\subsection[Liczniki]{Liczniki}
+
+Większość czynności dokonywanych przez \ConTeXt podczas przetworzania
+dokumentu łączy się z używaniem zdefiniowanych w pakiecie liczników,
+które zapisują wystąpienia różnych elementów w dokumencie. Można
+używać aktualnych wartości liczników we własnych makrach lub
+umieszczać je w składanym dokumencie, można też je modyfikować, aby
+zmienić działanie \ConTeXt-u lub wartość, jaka ma się pojawić w składzie. 
+
+[Liczniki zdefiniowane w ConteXt-cie]
+
+Własny licznik definiuje się przy pomocy polecenia
+\type{\definenumber}, a jego wartość zwiększa się przy pomocy
+\type{\incrementnumber}. 
+
+\startbuffer[liczniki]
+\definenumber[one]
+\incrementnumber[two]
+\stopbuffer
+  
+
+\typebuffer[liczniki]
+
+\useURL[liczniki][http://wiki.contextgarden.net/Counters]
+\from[liczniki]
 
 \section[Interfejs lua]{Interfejs lua}
 
@@ -658,6 +658,8 @@ Istnieją sposoby umożliwiające zagnieżdżania kodu lua w dokumentach \Contex
 \item Otoczenie \type{luacode}
 \item \type{\ctxluabuffer{}}
 \stopitemize
+
+
 
 
 \chapter[O dokumentach i ich strukturze]{O składzie dokumentów i ich strukturze}
@@ -943,6 +945,21 @@ od „set 1” do „set 5”.
 \section[Kolumny]{Kolumny}
 
 \type{\startcolumns[n=3] \stopcolumns}
+
+
+
+\section[Listy]{Listy}
+
+\section[Style akapitów]{Style akapitów}
+
+Akapit, czyli (dla \ConTeXt'u) fragment tekstu pomiędzy dwoma pustymi liniami lub  poleceniem \type{Przygotowując \par} a następnymi
+dwoma pustymi liniami lub polecenia \type{\par}, zwykle powinien posiadać jednolity styl od początku do 
+końca książki, zwłaszcza w przypadku powieści. Jego parametry powinno
+się ustalić na początku pliku źródłowego i  nie zmieniać później,
+jeżeli nie ma się zamiaru pozbawić składanego tekstu jednolitej
+formy.  Istnieje szereg przypadków, kiedy różne style akapitów są
+uzasadnione ich funkcją w strukturze dokumentu, na przykład w
+podręcznikach. 
 
 
 \chapter[Przetwarzanie tekstu]{Przetwarzanie tekstu}
